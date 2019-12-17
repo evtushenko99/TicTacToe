@@ -7,6 +7,7 @@ import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.RectF;
 import android.graphics.drawable.Drawable;
+import android.os.Build;
 import android.os.Parcel;
 import android.os.Parcelable;
 import android.util.AttributeSet;
@@ -16,6 +17,7 @@ import android.view.animation.AccelerateDecelerateInterpolator;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.annotation.RequiresApi;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -284,6 +286,7 @@ public class TicTacToeView extends View {
         state.mGameState = mGameState;
         state.victoriesOfCircle = mVictoriesOfCircle;
         state.victoriesOfCross = mVictoriesOfCross;
+        state.isCircle = isCircle;
         return state;
     }
 
@@ -295,6 +298,7 @@ public class TicTacToeView extends View {
         mGameState = ourState.mGameState;
         mVictoriesOfCircle = ourState.victoriesOfCircle;
         mVictoriesOfCross = ourState.victoriesOfCross;
+        isCircle = ourState.isCircle;
         invalidate();
     }
 
@@ -328,6 +332,7 @@ public class TicTacToeView extends View {
         private GameState mGameState;
         private int victoriesOfCircle;
         private int victoriesOfCross;
+         private boolean isCircle;
 
 
         private static final Creator<SavedState> CREATOR = new Creator<SavedState>() {
@@ -351,6 +356,7 @@ public class TicTacToeView extends View {
             super(superState);
         }
 
+        @RequiresApi(api = Build.VERSION_CODES.Q)
         @Override
         public void writeToParcel(Parcel out, int flags) {
             super.writeToParcel(out, flags);
@@ -358,6 +364,7 @@ public class TicTacToeView extends View {
             out.writeString(mGameState.toString());
             out.writeInt(victoriesOfCircle);
             out.writeInt(victoriesOfCross);
+            out.writeBoolean(isCircle);
 
 
         }
